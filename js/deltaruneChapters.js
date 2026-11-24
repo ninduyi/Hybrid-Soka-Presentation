@@ -698,93 +698,113 @@
 
               <!-- Real-time Indicator HUD -->
               <div class="dr-grid-3" style="gap:10px;">
-                <div class="dr-card gold" style="padding:10px 14px;">
+                <div class="dr-card gold" style="padding:8px 12px;">
                   <div style="font-size:9px;color:var(--dr-gold);font-family:var(--font-pixel);">MAKESPAN (WAKTU SELESAI)</div>
                   <div style="font-size:18px;font-family:var(--font-pixel);color:var(--dr-gold);margin:2px 0;" id="hud-makespan">15.4 s</div>
-                  <div style="font-size:13px;color:var(--dr-ice);" id="hud-makespan-desc">Optimal pada beban uji 100 tasks</div>
+                  <div style="font-size:12px;color:var(--dr-ice);" id="hud-makespan-desc">Optimal pada beban uji 100 tasks</div>
                 </div>
 
-                <div class="dr-card" style="padding:10px 14px;">
+                <div class="dr-card" style="padding:8px 12px;">
                   <div style="font-size:9px;color:var(--dr-cyan);font-family:var(--font-pixel);">DEGREE OF IMBALANCE (DOI)</div>
                   <div style="font-size:18px;font-family:var(--font-pixel);color:var(--dr-cyan);margin:2px 0;" id="hud-doi">0.071</div>
-                  <div style="font-size:13px;color:var(--dr-ice);" id="hud-doi-desc">Distribusi merata (Ideal < 0.15)</div>
+                  <div style="font-size:12px;color:var(--dr-ice);" id="hud-doi-desc">Distribusi merata (Ideal < 0.15)</div>
                 </div>
 
-                <div class="dr-card pink" style="padding:10px 14px;">
+                <div class="dr-card pink" style="padding:8px 12px;">
                   <div style="font-size:9px;color:var(--dr-pink);font-family:var(--font-pixel);">UTILISASI / EFISIENSI ENERGI</div>
                   <div style="font-size:18px;font-family:var(--font-pixel);color:var(--dr-pink);margin:2px 0;" id="hud-energy">ARUR: 96.6%</div>
-                  <div style="font-size:13px;color:var(--dr-ice);" id="hud-energy-desc">↓ 28.5% konsumsi daya idle</div>
+                  <div style="font-size:12px;color:var(--dr-ice);" id="hud-energy-desc">↓ 28.5% konsumsi daya idle</div>
                 </div>
               </div>
 
-              <!-- Server Nodes Battle Grid (4 Heterogeneous VMs) -->
-              <div class="battle-vm-grid" id="battle-vm-grid">
+              <!-- 3D Interactive Battle Arena Stage -->
+              <div class="battle-3d-stage" id="battle-3d-stage">
+                <div id="canvas-battle-3d"></div>
+                <div class="battle-3d-hint">👑 3D ARENA: DRAG/ORBIT • SCROLL ZOOM • KLIK MENARA/QUEUE UNTUK INFO AWAM</div>
+                <div class="battle-3d-cam-bar">
+                  <button class="dr-cam-btn" id="btn-cam-reset" title="Kembalikan sudut pandang isometrik standar">🎥 Reset Cam</button>
+                  <button class="dr-cam-btn" id="btn-cam-focus" title="Pusatkan kamera pada menara VM">🔍 Fokus VM</button>
+                  <button class="dr-cam-btn" id="btn-cam-top" title="Pandangan atas komparasi 4 menara">📐 Atas</button>
+                  <button class="dr-cam-btn" id="btn-cam-help" title="Penjelasan cara kerja visual 3D untuk awam">💡 Panduan</button>
+                </div>
+                <!-- Interactive Layman Explanation Tooltip -->
+                <div class="battle-3d-tooltip hidden" id="battle-3d-tooltip">
+                  <div class="tooltip-header">
+                    <span class="tooltip-title" id="tooltip-title">INFO MENARA 3D</span>
+                    <button class="tooltip-close-btn" id="tooltip-close-btn">&times;</button>
+                  </div>
+                  <p class="tooltip-body" id="tooltip-body">Klik menara kristal mana saja atau gerbang tugas untuk melihat penjelasan intuitif.</p>
+                </div>
+              </div>
+
+              <!-- Synchronous Compact Mini-Card Strip for 4 VMs -->
+              <div class="battle-vm-summary-strip" id="battle-vm-summary-strip">
                 <!-- VM-1 -->
-                <div class="battle-vm-card optimal" id="card-vm-1">
+                <div class="battle-vm-mini-card optimal" id="card-vm-1" title="Klik untuk fokus 3D ke VM-1">
                   <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-family:var(--font-pixel);font-size:10px;color:var(--dr-pink);">VM-1 (Small)</span>
-                    <span style="font-size:12px;color:var(--dr-slate);">85 MIPS</span>
+                    <span style="font-family:var(--font-pixel);font-size:9px;color:var(--dr-pink);">VM-1 (Small)</span>
+                    <span style="font-size:11px;color:var(--dr-slate);">85 MIPS</span>
                   </div>
-                  <div class="battle-load-track">
-                    <div class="battle-load-fill" id="fill-vm-1" style="width:48%;"></div>
+                  <div class="battle-load-track" style="margin:2px 0;height:6px;">
+                    <div class="battle-load-fill" id="fill-vm-1" style="width:48%;background:var(--dr-gold);"></div>
                   </div>
-                  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--dr-ice);">
+                  <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--dr-ice);">
                     <span>Tasks: <b id="task-cnt-1">24</b></span>
                     <span id="load-val-1">Load: 48%</span>
                   </div>
-                  <div style="font-size:12px;color:var(--dr-cyan);margin-top:4px;" id="status-vm-1">● SEIMBANG</div>
+                  <div id="status-vm-1" style="font-size:10px;color:var(--dr-cyan);font-family:var(--font-pixel);">● SEIMBANG</div>
                 </div>
 
                 <!-- VM-2 -->
-                <div class="battle-vm-card optimal" id="card-vm-2">
+                <div class="battle-vm-mini-card optimal" id="card-vm-2" title="Klik untuk fokus 3D ke VM-2">
                   <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-family:var(--font-pixel);font-size:10px;color:var(--dr-gold);">VM-2 (Medium)</span>
-                    <span style="font-size:12px;color:var(--dr-slate);">115 MIPS</span>
+                    <span style="font-family:var(--font-pixel);font-size:9px;color:var(--dr-gold);">VM-2 (Medium)</span>
+                    <span style="font-size:11px;color:var(--dr-slate);">115 MIPS</span>
                   </div>
-                  <div class="battle-load-track">
-                    <div class="battle-load-fill" id="fill-vm-2" style="width:52%;"></div>
+                  <div class="battle-load-track" style="margin:2px 0;height:6px;">
+                    <div class="battle-load-fill" id="fill-vm-2" style="width:52%;background:var(--dr-gold);"></div>
                   </div>
-                  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--dr-ice);">
+                  <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--dr-ice);">
                     <span>Tasks: <b id="task-cnt-2">26</b></span>
                     <span id="load-val-2">Load: 52%</span>
                   </div>
-                  <div style="font-size:12px;color:var(--dr-cyan);margin-top:4px;" id="status-vm-2">● SEIMBANG</div>
+                  <div id="status-vm-2" style="font-size:10px;color:var(--dr-cyan);font-family:var(--font-pixel);">● SEIMBANG</div>
                 </div>
 
                 <!-- VM-3 -->
-                <div class="battle-vm-card optimal" id="card-vm-3">
+                <div class="battle-vm-mini-card optimal" id="card-vm-3" title="Klik untuk fokus 3D ke VM-3">
                   <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-family:var(--font-pixel);font-size:10px;color:var(--dr-cyan);">VM-3 (Large)</span>
-                    <span style="font-size:12px;color:var(--dr-slate);">145 MIPS</span>
+                    <span style="font-family:var(--font-pixel);font-size:9px;color:var(--dr-cyan);">VM-3 (Large)</span>
+                    <span style="font-size:11px;color:var(--dr-slate);">145 MIPS</span>
                   </div>
-                  <div class="battle-load-track">
-                    <div class="battle-load-fill" id="fill-vm-3" style="width:50%;"></div>
+                  <div class="battle-load-track" style="margin:2px 0;height:6px;">
+                    <div class="battle-load-fill" id="fill-vm-3" style="width:50%;background:var(--dr-gold);"></div>
                   </div>
-                  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--dr-ice);">
+                  <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--dr-ice);">
                     <span>Tasks: <b id="task-cnt-3">25</b></span>
                     <span id="load-val-3">Load: 50%</span>
                   </div>
-                  <div style="font-size:12px;color:var(--dr-cyan);margin-top:4px;" id="status-vm-3">● SEIMBANG</div>
+                  <div id="status-vm-3" style="font-size:10px;color:var(--dr-cyan);font-family:var(--font-pixel);">● SEIMBANG</div>
                 </div>
 
                 <!-- VM-4 -->
-                <div class="battle-vm-card optimal" id="card-vm-4">
+                <div class="battle-vm-mini-card optimal" id="card-vm-4" title="Klik untuk fokus 3D ke VM-4">
                   <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="font-family:var(--font-pixel);font-size:10px;color:var(--dr-green);">VM-4 (X-Large)</span>
-                    <span style="font-size:12px;color:var(--dr-slate);">175 MIPS</span>
+                    <span style="font-family:var(--font-pixel);font-size:9px;color:var(--dr-green);">VM-4 (X-Large)</span>
+                    <span style="font-size:11px;color:var(--dr-slate);">175 MIPS</span>
                   </div>
-                  <div class="battle-load-track">
-                    <div class="battle-load-fill" id="fill-vm-4" style="width:51%;"></div>
+                  <div class="battle-load-track" style="margin:2px 0;height:6px;">
+                    <div class="battle-load-fill" id="fill-vm-4" style="width:51%;background:var(--dr-gold);"></div>
                   </div>
-                  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--dr-ice);">
+                  <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--dr-ice);">
                     <span>Tasks: <b id="task-cnt-4">25</b></span>
                     <span id="load-val-4">Load: 51%</span>
                   </div>
-                  <div style="font-size:12px;color:var(--dr-cyan);margin-top:4px;" id="status-vm-4">● SEIMBANG</div>
+                  <div id="status-vm-4" style="font-size:10px;color:var(--dr-cyan);font-family:var(--font-pixel);">● SEIMBANG</div>
                 </div>
               </div>
 
-              <!-- Phase Banner & Status Row — uses .battle-phase-row for safe truncation -->
+              <!-- Phase Banner & Status Row -->
               <div class="battle-phase-row">
                 <span id="phase-banner">✨ FIREBAT HYBRID: FA + BA + REBALANCING SD</span>
                 <span id="status-banner">Status: Terseimbang Optimal!</span>
@@ -798,11 +818,10 @@
           global.RalseiCompanion.setExpression('happy');
         }
 
-        // Live Simulation Logic
+        // Live Simulation Variables
         let activeAlgo = 'firebat';
         let taskCount = 100;
         let isSimRunning = false;
-        let simInterval = null;
 
         const rngSlider = container.querySelector('#rng-tasks');
         const lblTaskCount = container.querySelector('#lbl-task-count');
@@ -815,45 +834,173 @@
         const phaseBanner = container.querySelector('#phase-banner');
         const statusBanner = container.querySelector('#status-banner');
 
+        const tooltip = container.querySelector('#battle-3d-tooltip');
+        const tooltipTitle = container.querySelector('#tooltip-title');
+        const tooltipBody = container.querySelector('#tooltip-body');
+        const tooltipClose = container.querySelector('#tooltip-close-btn');
+
+        if (tooltipClose) {
+          tooltipClose.onclick = () => tooltip.classList.add('hidden');
+        }
+
+        function showTooltip(title, bodyHtml) {
+          if (!tooltip) return;
+          tooltipTitle.textContent = title;
+          tooltipBody.innerHTML = bodyHtml;
+          tooltip.classList.remove('hidden');
+        }
+
+        // Initialize 3D Arena Engine
+        let sim3dInstance = null;
+        const arenaCanvasBox = container.querySelector('#canvas-battle-3d');
+
+        function handle3DElementClick(data, algoKey) {
+          app.playSFX('select');
+          const algoInfo = global.InteractiveSim3D?.ALGO_MODES[algoKey] || {};
+          if (data.type === 'vm') {
+            const vmDef = data.def;
+            const vmIdx = data.vmIdx;
+            const exp = (algoInfo.vmExplanations && algoInfo.vmExplanations[vmIdx])
+              ? algoInfo.vmExplanations[vmIdx]
+              : `${vmDef.name}: ${vmDef.descAwam}`;
+            showTooltip(
+              `🏛️ ${vmDef.name} (${vmDef.mips} MIPS) · ${vmDef.role}`,
+              `<span style="color:var(--dr-cyan);font-weight:bold;">Status Analisis:</span> ${exp}<br><span style="font-size:12px;color:var(--dr-slate);margin-top:4px;display:block;">ℹ️ <i>Karakteristik Hardware:</i> ${vmDef.descAwam}</span>`
+            );
+            const mood = algoKey === 'firebat' ? 'happy' : (algoKey === 'fa' ? 'talk' : 'surprised');
+            if (global.RalseiCompanion) global.RalseiCompanion.setExpression(mood);
+            app.typeDialogue('RALSEI GUIDING PRINCE', exp, mood);
+          } else if (data.type === 'queue') {
+            showTooltip(
+              '📥 CLOUDLETS QUEUE (SUMBER ANTREAN DATA)',
+              `Pintu gerbang kedatangan paket tugas komputasi. Saat ini terdapat <b>${taskCount} Cloudlets</b> dalam antrean. Algoritma <b>${algoInfo.name}</b> sedang mengarahkan bola energi tugas menuju ke-4 menara VM server.<br><span style="font-size:12px;color:var(--dr-gold);margin-top:4px;display:block;">💡 Geser slider <b>TASKS</b> untuk menambah beban atau klik <b>Run Battle</b> untuk melihat pergerakan tugas!</span>`
+            );
+            app.typeDialogue('RALSEI GUIDING PRINCE', `Ada ${taskCount} tugas Cloudlet di antrean siap dieksekusi oleh 4 Virtual Machine!`, 'smile');
+          }
+        }
+
+        if (global.InteractiveSim3D) {
+          sim3dInstance = global.InteractiveSim3D.initArena(arenaCanvasBox, {
+            onElementClick: (data, currentAlgo) => {
+              handle3DElementClick(data, currentAlgo);
+            }
+          });
+        }
+
+        // Camera control buttons
+        const btnCamReset = container.querySelector('#btn-cam-reset');
+        const btnCamFocus = container.querySelector('#btn-cam-focus');
+        const btnCamTop = container.querySelector('#btn-cam-top');
+        const btnCamHelp = container.querySelector('#btn-cam-help');
+
+        let focusCycleIdx = 0;
+        const focusTargets = ['all', 'vm1', 'vm2', 'vm3', 'vm4'];
+
+        if (btnCamReset) {
+          btnCamReset.onclick = () => {
+            app.playSFX('select');
+            if (sim3dInstance) sim3dInstance.resetCamera();
+            if (btnCamFocus) btnCamFocus.textContent = '🔍 Fokus VM';
+          };
+        }
+
+        if (btnCamFocus) {
+          btnCamFocus.onclick = () => {
+            app.playSFX('select');
+            focusCycleIdx = (focusCycleIdx + 1) % focusTargets.length;
+            const targetKey = focusTargets[focusCycleIdx];
+            if (sim3dInstance) sim3dInstance.focusCamera(targetKey);
+            btnCamFocus.textContent = targetKey === 'all' ? '🔍 Fokus VM' : `🔍 Fokus ${targetKey.toUpperCase()}`;
+            if (targetKey !== 'all') {
+              const vmIdx = parseInt(targetKey.replace('vm', '')) - 1;
+              handle3DElementClick({ type: 'vm', vmIdx, def: global.InteractiveSim3D?.VM_DEFS[vmIdx] }, activeAlgo);
+            }
+          };
+        }
+
+        if (btnCamTop) {
+          btnCamTop.onclick = () => {
+            app.playSFX('select');
+            if (sim3dInstance) sim3dInstance.focusCamera('top');
+            if (btnCamFocus) btnCamFocus.textContent = '🔍 Fokus VM';
+          };
+        }
+
+        if (btnCamHelp) {
+          btnCamHelp.onclick = () => {
+            app.playSFX('confirm');
+            const algoInfo = global.InteractiveSim3D?.ALGO_MODES[activeAlgo] || {};
+            showTooltip(
+              `💡 CARA MEMBACA VISUALISASI 3D (${algoInfo.name})`,
+              `${algoInfo.explanation}<br><br><b style="color:var(--dr-cyan);">Kontrol Interaksi:</b> Klik & geser kursor untuk memutar kamera 3D (orbit), scroll roda mouse untuk zoom, atau klik menara/gerbang antrean secara langsung!`
+            );
+            app.typeDialogue('RALSEI GUIDING PRINCE', algoInfo.explanation, activeAlgo === 'firebat' ? 'happy' : 'talk');
+          };
+        }
+
+        // Mini Cards Synchronous Setup
+        const f1 = container.querySelector('#fill-vm-1');
+        const f2 = container.querySelector('#fill-vm-2');
+        const f3 = container.querySelector('#fill-vm-3');
+        const f4 = container.querySelector('#fill-vm-4');
+
+        const c1 = container.querySelector('#card-vm-1');
+        const c2 = container.querySelector('#card-vm-2');
+        const c3 = container.querySelector('#card-vm-3');
+        const c4 = container.querySelector('#card-vm-4');
+
+        const s1 = container.querySelector('#status-vm-1');
+        const s2 = container.querySelector('#status-vm-2');
+        const s3 = container.querySelector('#status-vm-3');
+        const s4 = container.querySelector('#status-vm-4');
+
+        const t1 = container.querySelector('#task-cnt-1');
+        const t2 = container.querySelector('#task-cnt-2');
+        const t3 = container.querySelector('#task-cnt-3');
+        const t4 = container.querySelector('#task-cnt-4');
+
+        const lv1 = container.querySelector('#load-val-1');
+        const lv2 = container.querySelector('#load-val-2');
+        const lv3 = container.querySelector('#load-val-3');
+        const lv4 = container.querySelector('#load-val-4');
+
+        const miniCards = [c1, c2, c3, c4];
+        miniCards.forEach((card, idx) => {
+          if (!card) return;
+          card.onclick = () => {
+            const vmKeys = ['vm1', 'vm2', 'vm3', 'vm4'];
+            if (sim3dInstance) sim3dInstance.focusCamera(vmKeys[idx]);
+            handle3DElementClick({ type: 'vm', vmIdx: idx, def: global.InteractiveSim3D?.VM_DEFS[idx] }, activeAlgo);
+          };
+        });
+
         function applySimulationState(algo, count) {
           activeAlgo = algo;
           taskCount = count;
 
-          const f1 = container.querySelector('#fill-vm-1');
-          const f2 = container.querySelector('#fill-vm-2');
-          const f3 = container.querySelector('#fill-vm-3');
-          const f4 = container.querySelector('#fill-vm-4');
+          miniCards.forEach(c => {
+            if (c) c.className = 'battle-vm-mini-card';
+          });
 
-          const c1 = container.querySelector('#card-vm-1');
-          const c2 = container.querySelector('#card-vm-2');
-          const c3 = container.querySelector('#card-vm-3');
-          const c4 = container.querySelector('#card-vm-4');
-
-          const s1 = container.querySelector('#status-vm-1');
-          const s2 = container.querySelector('#status-vm-2');
-          const s3 = container.querySelector('#status-vm-3');
-          const s4 = container.querySelector('#status-vm-4');
-
-          const t1 = container.querySelector('#task-cnt-1');
-          const t2 = container.querySelector('#task-cnt-2');
-          const t3 = container.querySelector('#task-cnt-3');
-          const t4 = container.querySelector('#task-cnt-4');
-
-          [c1, c2, c3, c4].forEach(c => c.className = 'battle-vm-card');
+          if (sim3dInstance) {
+            sim3dInstance.setAlgorithm(algo, count);
+          }
 
           if (algo === 'firebat') {
             // Balanced by SD migration
             f1.style.width = '48%'; f2.style.width = '52%'; f3.style.width = '50%'; f4.style.width = '51%';
-            f1.style.background = 'var(--dr-gold)'; f2.style.background = 'var(--dr-gold)'; f3.style.background = 'var(--dr-gold)'; f4.style.background = 'var(--dr-gold)';
+            f1.style.background = f2.style.background = f3.style.background = f4.style.background = 'var(--dr-gold)';
             c1.classList.add('optimal'); c2.classList.add('optimal'); c3.classList.add('optimal'); c4.classList.add('optimal');
-            s1.textContent = '● SEIMBANG'; s2.textContent = '● SEIMBANG'; s3.textContent = '● SEIMBANG'; s4.textContent = '● SEIMBANG';
+            s1.textContent = s2.textContent = s3.textContent = s4.textContent = '● SEIMBANG';
             s1.style.color = s2.style.color = s3.style.color = s4.style.color = 'var(--dr-cyan)';
+
+            lv1.textContent = 'Load: 48%'; lv2.textContent = 'Load: 52%'; lv3.textContent = 'Load: 50%'; lv4.textContent = 'Load: 51%';
 
             const ms = (15.4 * (count / 100)).toFixed(1);
             hudMakespan.textContent = `${ms} s`;
             hudDoi.textContent = '0.071';
             hudEnergy.textContent = 'ARUR: 96.6%';
-            phaseBanner.textContent = '✨ FIREBAT HYBRID: FA + BA + REBALANCING SD';
+            phaseBanner.textContent = '✨ FIREBAT HYBRID: FA + BA + REBALANCING SD (BEBAN RAPI & SEIMBANG)';
             statusBanner.textContent = 'Status: Terseimbang Optimal!';
             statusBanner.style.color = 'var(--dr-gold)';
 
@@ -867,12 +1014,14 @@
               global.RalseiCompanion.triggerSparkles();
             }
           } else if (algo === 'fa') {
-            // Firefly: spread out but slow convergence, some unevenness
+            // Firefly: spread out but slow convergence
             f1.style.width = '72%'; f2.style.width = '60%'; f3.style.width = '44%'; f4.style.width = '32%';
-            f1.style.background = 'var(--dr-cyan)'; f2.style.background = 'var(--dr-cyan)'; f3.style.background = 'var(--dr-cyan)'; f4.style.background = 'var(--dr-cyan)';
+            f1.style.background = f2.style.background = f3.style.background = f4.style.background = 'var(--dr-cyan)';
             c1.classList.add('overloaded'); c2.classList.add('balanced'); c3.classList.add('balanced'); c4.classList.add('balanced');
             s1.textContent = '▲ OVERLOAD'; s2.textContent = '● NORMAL'; s3.textContent = '● NORMAL'; s4.textContent = '▼ UNDERLOAD';
             s1.style.color = 'var(--dr-pink)'; s4.style.color = 'var(--dr-slate)';
+
+            lv1.textContent = 'Load: 72%'; lv2.textContent = 'Load: 60%'; lv3.textContent = 'Load: 44%'; lv4.textContent = 'Load: 32%';
 
             const ms = (19.3 * (count / 100)).toFixed(1);
             hudMakespan.textContent = `${ms} s`;
@@ -891,16 +1040,18 @@
           } else if (algo === 'ba') {
             // Bat: fast local optimum trap, heavy load on VM-1
             f1.style.width = '88%'; f2.style.width = '54%'; f3.style.width = '38%'; f4.style.width = '20%';
-            f1.style.background = 'var(--dr-pink)'; f2.style.background = 'var(--dr-pink)'; f3.style.background = 'var(--dr-pink)'; f4.style.background = 'var(--dr-pink)';
+            f1.style.background = f2.style.background = f3.style.background = f4.style.background = 'var(--dr-pink)';
             c1.classList.add('overloaded');
             s1.textContent = '▲ SANGAT OVERLOAD'; s2.textContent = '● BUSY'; s3.textContent = '▼ UNDERLOAD'; s4.textContent = '▼ IDLE';
             s1.style.color = 'var(--dr-pink)'; s4.style.color = 'var(--dr-slate)';
+
+            lv1.textContent = 'Load: 88%'; lv2.textContent = 'Load: 54%'; lv3.textContent = 'Load: 38%'; lv4.textContent = 'Load: 20%';
 
             const ms = (17.8 * (count / 100)).toFixed(1);
             hudMakespan.textContent = `${ms} s`;
             hudDoi.textContent = '0.240';
             hudEnergy.textContent = 'ARUR: 78.5%';
-            phaseBanner.textContent = '🦇 BAT ALGORITHM: EKSPLOITASI LOKAL CEPAT (TERJEBAK LOCAL OPTIMUM)';
+            phaseBanner.textContent = '🦇 BAT ALGORITHM: EKSPLOITASI LOKAL CEPAT (TERJEBAK LOCAL OPTIMUM VM-1)';
             statusBanner.textContent = 'Status: VM-1 Overload Terjebak!';
             statusBanner.style.color = 'var(--dr-pink)';
 
@@ -913,17 +1064,19 @@
           } else if (algo === 'hgaco') {
             // HGACO: high imbalance due to pheromone clustering
             f1.style.width = '94%'; f2.style.width = '68%'; f3.style.width = '32%'; f4.style.width = '16%';
-            f1.style.background = '#4ce6cf'; f2.style.background = '#4ce6cf'; f3.style.background = '#4ce6cf'; f4.style.background = '#4ce6cf';
+            f1.style.background = f2.style.background = f3.style.background = f4.style.background = '#4ce6cf';
             c1.classList.add('overloaded');
-            s1.textContent = '▲ CRITICAL OVERLOAD'; s2.textContent = '● BUSY'; s3.textContent = '▼ UNDERLOAD'; s4.textContent = '▼ SEVERELY IDLE';
+            s1.textContent = '▲ CRITICAL 94%'; s2.textContent = '● BUSY 68%'; s3.textContent = '▼ UNDERLOAD'; s4.textContent = '▼ SEVERELY IDLE';
             s1.style.color = 'var(--dr-pink)'; s4.style.color = 'var(--dr-slate)';
+
+            lv1.textContent = 'Load: 94%'; lv2.textContent = 'Load: 68%'; lv3.textContent = 'Load: 32%'; lv4.textContent = 'Load: 16%';
 
             const ms = (21.5 * (count / 100)).toFixed(1);
             hudMakespan.textContent = `${ms} s`;
             hudDoi.textContent = '0.554';
             hudEnergy.textContent = 'ARUR: 79.5%';
-            phaseBanner.textContent = '🐜 HGACO (IEEE 2025): FEROMON ACO MENUMPUK CLOUDLET BESAR KE VM KECIL';
-            statusBanner.textContent = 'Status: DOI Tinggi 0.554 — CPU 2.4× Lama';
+            phaseBanner.textContent = '🐜 HGACO (IEEE 2025): FEROMON ACO MENUMPUK CLOUDLET BESAR KE VM-1';
+            statusBanner.textContent = 'Status: DOI Tinggi 0.554 — Bottleneck Kritis!';
             statusBanner.style.color = '#4ce6cf';
 
             t1.textContent = Math.round(count * 0.47);
@@ -952,52 +1105,64 @@
           applySimulationState(activeAlgo, v);
         };
 
-        // Battle Run Button (Animated step-through)
+        // Battle Run Button (Orchestrated 3D Simulation Step-Through)
         btnRun.onclick = () => {
           app.playSFX('confirm');
           if (isSimRunning) {
-            clearInterval(simInterval);
             isSimRunning = false;
             btnRun.textContent = '▶ Run Battle';
+            if (sim3dInstance) sim3dInstance.resetSimulation();
             return;
           }
 
           isSimRunning = true;
           btnRun.textContent = '⏸ Pause';
-          let step = 0;
 
-          simInterval = setInterval(() => {
-            step++;
-            if (step === 1) {
-              phaseBanner.textContent = '⚡ FASE 1: FIREFLY — Cahaya menyebar ke seluruh VM...';
-              if (global.RalseiCompanion) global.RalseiCompanion.walk('right', 6);
-            } else if (step === 2) {
-              phaseBanner.textContent = '🦇 FASE 2: BAT — Pulsa sonar mengunci kandidat terbaik...';
-              if (global.RalseiCompanion) global.RalseiCompanion.setExpression('talk');
-            } else if (step === 3) {
-              phaseBanner.textContent = '🪄 FASE 3: SD Rebalancing — Task overload dipindahkan!';
-              if (global.RalseiCompanion) global.RalseiCompanion.walk('left', 6);
-            } else if (step >= 4) {
-              clearInterval(simInterval);
-              isSimRunning = false;
-              btnRun.textContent = '▶ Run Battle';
-              applySimulationState('firebat', Number(rngSlider.value));
-              if (global.DeltaruneSFX) global.DeltaruneSFX.playChime();
-            }
-          }, 900);
+          if (sim3dInstance) {
+            sim3dInstance.triggerBattleRun(
+              (step, phaseText) => {
+                phaseBanner.textContent = phaseText;
+                if (step === 1 && global.RalseiCompanion) global.RalseiCompanion.walk('right', 6);
+                else if (step === 2 && global.RalseiCompanion) global.RalseiCompanion.setExpression('talk');
+                else if (step === 3 && global.RalseiCompanion) global.RalseiCompanion.walk('left', 6);
+              },
+              () => {
+                isSimRunning = false;
+                btnRun.textContent = '▶ Run Battle';
+                applySimulationState(activeAlgo, Number(rngSlider.value));
+                if (global.DeltaruneSFX) global.DeltaruneSFX.playChime();
+                if (global.RalseiCompanion) {
+                  global.RalseiCompanion.setExpression(activeAlgo === 'firebat' ? 'happy' : 'talk');
+                  global.RalseiCompanion.triggerSparkles();
+                }
+              }
+            );
+          }
         };
 
         btnReset.onclick = () => {
           app.playSFX('cancel');
-          if (simInterval) clearInterval(simInterval);
           isSimRunning = false;
           btnRun.textContent = '▶ Run Battle';
           rngSlider.value = 100;
           lblTaskCount.textContent = 100;
+          container.querySelectorAll('#sim-algo-selector button').forEach(b => {
+            b.classList.toggle('selected', b.dataset.algo === 'firebat');
+          });
+          if (sim3dInstance) sim3dInstance.resetSimulation();
           applySimulationState('firebat', 100);
         };
 
+        // Initial setup
         applySimulationState('firebat', 100);
+
+        // Store cleanup hook on this chapter
+        this.destroy = () => {
+          if (sim3dInstance) {
+            sim3dInstance.destroy();
+            sim3dInstance = null;
+          }
+        };
       }
     },
 

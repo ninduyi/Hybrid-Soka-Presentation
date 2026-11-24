@@ -130,6 +130,17 @@
 
     goToChapter(idx) {
       if (idx < 0 || idx >= chapters.length) return;
+
+      // Clean up previous chapter resources (e.g. 3D simulation loops)
+      const prevChapter = chapters[currentChapterIdx];
+      if (prevChapter && typeof prevChapter.destroy === 'function') {
+        try {
+          prevChapter.destroy();
+        } catch (e) {
+          console.warn('Error destroying chapter:', e);
+        }
+      }
+
       currentChapterIdx = idx;
       currentBeatIdx = 0;
       const chapter = chapters[currentChapterIdx];
