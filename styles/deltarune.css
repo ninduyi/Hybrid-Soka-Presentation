@@ -1,0 +1,984 @@
+/* ==========================================================================
+   DELTARUNE DARK WORLD / CYBER WORLD THEME STYLESHEET
+   Spacious Layout, Responsive Negative Space, Animated Ralsei Companion,
+   RPG Party Stats Cards, and Interactive CloudSim Battle Arena.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap');
+
+:root {
+  --dr-navy: #0b0b3b;
+  --dr-navy-deep: #04041a;
+  --dr-cyan: #75fbed;
+  --dr-cyan-glow: rgba(117, 251, 237, 0.35);
+  --dr-pink: #eb0095;
+  --dr-pink-glow: rgba(235, 0, 149, 0.35);
+  --dr-ice: #dbeafe;
+  --dr-slate: #6a7bc4;
+  --dr-gold: #ffde00;
+  --dr-green: #00ff87;
+
+  --font-pixel: 'Press Start 2P', 'DotGothic16', monospace;
+  --font-body: 'DotGothic16', 'VT323', monospace;
+  --font-mono: 'VT323', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--dr-navy-deep);
+  color: var(--dr-ice);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  image-rendering: pixelated;
+}
+
+/* Background 3D Canvas */
+#bg-3d {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background: radial-gradient(circle at center, #0e1147 0%, #050522 75%, #020210 100%);
+}
+
+/* Master Deltarune Deck Root with Balanced Padding */
+.dr-deck-root {
+  position: relative;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px 24px;
+  pointer-events: none;
+}
+
+.dr-deck-root * {
+  pointer-events: auto;
+}
+
+/* --------------------------------------------------------------------------
+   TOP HEADER BAR: STREAMLINED & RESPONSIVE
+   -------------------------------------------------------------------------- */
+.dr-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(11, 11, 59, 0.75);
+  border: 2px solid var(--dr-cyan);
+  border-radius: 10px;
+  padding: 8px 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 12px var(--dr-cyan-glow);
+  backdrop-filter: blur(12px);
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.dr-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--dr-cyan);
+  letter-spacing: 1.2px;
+}
+
+/* Kris Pixel Sprite Icon */
+.dr-kris-icon {
+  width: 24px;
+  height: 24px;
+  background: url('../assets/kris_spritesheet.png') no-repeat -10px -10px;
+  background-size: 800px;
+  display: inline-block;
+  image-rendering: pixelated;
+  border-radius: 4px;
+}
+
+.dr-party-bar {
+  display: flex;
+  gap: 14px;
+}
+
+.dr-hero-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(105, 123, 196, 0.1);
+  border: 1px solid rgba(105, 123, 196, 0.4);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.dr-hero-chip.active {
+  border-color: var(--dr-cyan);
+  box-shadow: 0 0 10px var(--dr-cyan-glow);
+  background: rgba(117, 251, 237, 0.14);
+}
+
+.dr-hero-name {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--dr-gold);
+}
+
+.dr-hero-hp-bar {
+  width: 48px;
+  height: 5px;
+  background: #090a2a;
+  border: 1px solid var(--dr-slate);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.dr-hero-hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--dr-pink), var(--dr-cyan));
+  width: 100%;
+}
+
+.dr-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dr-btn-icon {
+  background: rgba(11, 11, 59, 0.85);
+  border: 1px solid var(--dr-slate);
+  color: var(--dr-ice);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dr-btn-icon:hover {
+  border-color: var(--dr-cyan);
+  color: var(--dr-cyan);
+  transform: translateY(-1px);
+  box-shadow: 0 0 8px var(--dr-cyan-glow);
+}
+
+/* --------------------------------------------------------------------------
+   MAIN STAGE / CHAPTER STAGE: SPACIOUS, ADAPTIVE & NO CRAMPING
+   -------------------------------------------------------------------------- */
+.dr-main-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 0;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.dr-chapter-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Sleek Minimalist Glass Card */
+.dr-card {
+  background: rgba(11, 11, 59, 0.7);
+  border: 2px solid var(--dr-cyan);
+  border-radius: 10px;
+  padding: 16px 20px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35), 0 0 14px rgba(117, 251, 237, 0.12);
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+}
+
+.dr-card.pink {
+  border-color: var(--dr-pink);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35), 0 0 14px rgba(235, 0, 149, 0.18);
+}
+
+.dr-card.gold {
+  border-color: var(--dr-gold);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35), 0 0 14px rgba(255, 222, 0, 0.18);
+}
+
+.dr-chapter-kicker {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--dr-pink);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+.dr-chapter-title {
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  color: var(--dr-cyan);
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.dr-chapter-subtitle {
+  font-family: var(--font-body);
+  font-size: 17px;
+  color: var(--dr-ice);
+  margin-bottom: 8px;
+}
+
+/* Grids */
+.dr-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  height: 100%;
+}
+
+.dr-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   PARTY MEMBER CARDS / BUTTONS (CHAPTER 1)
+   -------------------------------------------------------------------------- */
+.dr-party-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.dr-party-card-btn {
+  background: rgba(9, 10, 42, 0.85);
+  border: 2px solid var(--dr-slate);
+  border-radius: 8px;
+  padding: 10px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.dr-party-card-btn:hover, .dr-party-card-btn.selected {
+  border-color: var(--dr-cyan);
+  background: rgba(117, 251, 237, 0.16);
+  box-shadow: 0 0 14px var(--dr-cyan-glow);
+  transform: translateY(-2px);
+}
+
+.dr-party-card-btn .party-icon {
+  font-size: 20px;
+}
+
+.dr-party-card-btn .party-name {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--dr-gold);
+  line-height: 1.3;
+}
+
+.dr-party-card-btn .party-nim {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--dr-slate);
+}
+
+.dr-party-card-btn .party-role-tag {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--dr-cyan);
+  background: rgba(4, 4, 26, 0.6);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.party-mini-bar {
+  width: 90%;
+  height: 5px;
+  background: #060624;
+  border: 1px solid var(--dr-slate);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 3px;
+}
+
+.party-mini-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--dr-pink), var(--dr-cyan));
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   DELTARUNE DIALOGUE BOX WITH RALSEI PIXEL PORTRAIT
+   Spacious, readable, no overflow, clickable to skip/advance
+   -------------------------------------------------------------------------- */
+.dr-dialogue-box {
+  background: rgba(4, 4, 26, 0.95);
+  border: 3px solid var(--dr-cyan);
+  border-radius: 10px;
+  padding: 10px 18px;
+  box-shadow: 0 0 20px var(--dr-cyan-glow), inset 0 0 10px rgba(117, 251, 237, 0.08);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  min-height: 100px;
+  max-height: 120px;
+  position: relative;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+/* Ralsei / Mascot Portrait Frame */
+.dr-dialogue-portrait {
+  width: 74px;
+  height: 74px;
+  border: 2px solid var(--dr-pink);
+  border-radius: 8px;
+  background: radial-gradient(circle at center, #131754 0%, #060624 85%);
+  box-shadow: 0 0 12px var(--dr-pink-glow);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.dr-dialogue-portrait:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 16px var(--dr-cyan-glow);
+}
+
+/* Portrait Image — zooms in cleanly onto Ralsei's face */
+.dr-portrait-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 10%;
+  image-rendering: pixelated;
+  transform: scale(1.18);
+  transition: transform 0.1s ease;
+}
+
+.dr-dialogue-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.dr-dialogue-speaker {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--dr-gold);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.8px;
+}
+
+.dr-dialogue-text {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--dr-ice);
+  line-height: 1.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dr-dialogue-prompt {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--dr-pink);
+  animation: blink-soul 0.7s infinite alternate;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-left: 8px;
+}
+
+@keyframes blink-soul {
+  from { opacity: 0.3; transform: translateX(0); }
+  to { opacity: 1; transform: translateX(3px); }
+}
+
+/* --------------------------------------------------------------------------
+   DELTARUNE ACTION MENU BAR
+   -------------------------------------------------------------------------- */
+.dr-bottom-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.dr-action-menu {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dr-act-btn {
+  flex: 1;
+  background: rgba(9, 10, 42, 0.9);
+  border: 2px solid var(--dr-slate);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: var(--dr-ice);
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+
+.dr-act-btn:hover, .dr-act-btn.active {
+  border-color: var(--dr-pink);
+  color: #fff;
+  background: rgba(235, 0, 149, 0.22);
+  box-shadow: 0 0 14px var(--dr-pink-glow);
+  transform: translateY(-1px);
+}
+
+.dr-act-btn.active::before {
+  content: '♥';
+  color: var(--dr-pink);
+  font-size: 12px;
+  position: absolute;
+  left: 10px;
+  animation: soul-bounce 0.4s infinite alternate ease-in-out;
+}
+
+@keyframes soul-bounce {
+  from { transform: translateX(0); }
+  to { transform: translateX(3px); }
+}
+
+/* Submenu Buttons Grid */
+.dr-submenu-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dr-sub-btn {
+  background: rgba(105, 123, 196, 0.12);
+  border: 1px solid var(--dr-slate);
+  border-radius: 6px;
+  padding: 6px 12px;
+  color: var(--dr-ice);
+  font-family: var(--font-body);
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dr-sub-btn:hover, .dr-sub-btn.selected {
+  border-color: var(--dr-cyan);
+  color: var(--dr-cyan);
+  background: rgba(117, 251, 237, 0.18);
+  box-shadow: 0 0 8px var(--dr-cyan-glow);
+}
+
+/* --------------------------------------------------------------------------
+   RALSEI OVERWORLD COMPANION (ANIMATED ON STAGE)
+   Uses CSS background-position sprite sheet — no broken PNG holes!
+   -------------------------------------------------------------------------- */
+.ralsei-companion {
+  position: absolute;
+  bottom: 10px;
+  right: 18px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  user-select: none;
+  /* Max width to prevent overflow on small stages */
+  max-width: 100px;
+}
+
+.ralsei-companion:hover {
+  transform: translateY(-4px);
+}
+
+.ralsei-companion.bounce {
+  animation: ralsei-hop 0.4s ease;
+}
+
+@keyframes ralsei-hop {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-16px) scale(1.08); }
+  100% { transform: translateY(0); }
+}
+
+/* Ralsei Sprite — 100% clean transparent PNGs, crisp pixel art */
+.ralsei-sprite {
+  display: block;
+  width: 72px;
+  height: 120px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 8px rgba(117, 251, 237, 0.45));
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ralsei-shadow {
+  width: 48px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: 50%;
+  margin-top: -4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.ralsei-name-tag {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--dr-pink);
+  margin-top: 4px;
+  letter-spacing: 1px;
+  background: rgba(4, 4, 26, 0.9);
+  padding: 2px 6px;
+  border: 1px solid var(--dr-pink);
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* Ralsei Speech Bubble — opens LEFTWARD to avoid right-edge overflow */
+.ralsei-speech-bubble {
+  position: absolute;
+  bottom: 150px;
+  /* Open leftward from Ralsei instead of rightward */
+  right: 60px;
+  left: auto;
+  width: clamp(200px, 260px, 50vw);
+  background: rgba(4, 4, 26, 0.97);
+  border: 2px solid var(--dr-cyan);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--dr-ice);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.45;
+  box-shadow: 0 0 18px var(--dr-cyan-glow);
+  z-index: 60;
+  pointer-events: none;
+  word-break: break-word;
+}
+
+/* Tail points toward Ralsei (bottom-right of bubble) */
+.ralsei-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  right: 18px;
+  border-width: 9px 7px 0 7px;
+  border-style: solid;
+  border-color: var(--dr-cyan) transparent transparent transparent;
+}
+
+.ralsei-speech-bubble.pop-in {
+  animation: bubble-pop 0.25s ease-out;
+}
+
+@keyframes bubble-pop {
+  0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Sparkle particles */
+.ralsei-sparkles {
+  position: absolute;
+  width: 100px;
+  height: 120px;
+  top: -10px;
+  left: -16px;
+  pointer-events: none;
+}
+
+.ralsei-sparkle-star {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
+  animation: sparkle-anim 0.9s infinite alternate;
+}
+
+@keyframes sparkle-anim {
+  0% { transform: scale(0.2) rotate(0deg); opacity: 0.2; }
+  50% { transform: scale(1.3) rotate(90deg); opacity: 1; }
+  100% { transform: scale(0.4) rotate(180deg); opacity: 0.3; }
+}
+
+/* --------------------------------------------------------------------------
+   CLOUDSIM TASK-TO-VM BATTLE ARENA & SANDBOX (CHAPTER 4)
+   -------------------------------------------------------------------------- */
+.battle-arena-root {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  min-height: 0;
+  /* Reserves dedicated right gutter for Ralsei companion so VM-4 is never blocked! */
+  padding-right: 96px;
+}
+
+.battle-control-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(4, 4, 26, 0.85);
+  border: 1px solid var(--dr-slate);
+  border-radius: 8px;
+  padding: 8px 14px;
+  flex-shrink: 0;
+}
+
+.battle-vm-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+}
+
+.battle-vm-card {
+  background: rgba(11, 11, 59, 0.75);
+  border: 2px solid var(--dr-slate);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* VM status text: short + clean ellipsis so it never overflows */
+.battle-vm-card [id^="status-vm-"] {
+  font-size: 11px;
+  color: var(--dr-cyan);
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-pixel);
+  letter-spacing: 0.5px;
+}
+
+.battle-vm-card.overloaded {
+  border-color: var(--dr-pink);
+  box-shadow: 0 0 16px var(--dr-pink-glow);
+  animation: pulse-warn 0.8s infinite alternate;
+}
+
+.battle-vm-card.balanced {
+  border-color: var(--dr-cyan);
+}
+
+.battle-vm-card.optimal {
+  border-color: var(--dr-gold);
+  box-shadow: 0 0 16px rgba(255, 222, 0, 0.35);
+}
+
+@keyframes pulse-warn {
+  from { background: rgba(235, 0, 149, 0.1); }
+  to { background: rgba(235, 0, 149, 0.25); }
+}
+
+.battle-load-track {
+  height: 10px;
+  background: #060624;
+  border: 1px solid var(--dr-slate);
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+.battle-load-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease, background 0.3s ease;
+  background: var(--dr-cyan);
+}
+
+/* Phase banner row: status text truncates cleanly */
+.battle-phase-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  padding: 8px 14px;
+  background: rgba(4, 4, 26, 0.85);
+  border: 1px solid var(--dr-gold);
+  border-radius: 6px;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+#phase-banner {
+  color: var(--dr-gold);
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#status-banner {
+  color: var(--dr-cyan);
+  font-family: var(--font-body);
+  font-size: 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   PARTY STATS CARD MODAL (RPG INSPECTOR)
+   -------------------------------------------------------------------------- */
+.party-modal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: rgba(6, 6, 32, 0.96);
+  border: 3px solid var(--dr-cyan);
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 680px;
+  width: 95%;
+  box-shadow: 0 0 35px var(--dr-cyan-glow);
+}
+
+.party-hero-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  border-bottom: 2px solid rgba(117, 251, 237, 0.3);
+  padding-bottom: 12px;
+}
+
+.party-hero-avatar-box {
+  width: 68px;
+  height: 68px;
+  border: 2px solid var(--dr-pink);
+  border-radius: 8px;
+  background: #090b3b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px var(--dr-pink-glow);
+  flex-shrink: 0;
+  overflow: hidden;
+  font-size: 32px;
+}
+
+.party-hero-title {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  color: var(--dr-cyan);
+  margin-bottom: 4px;
+}
+
+.party-hero-role {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--dr-gold);
+  letter-spacing: 0.8px;
+}
+
+.party-hero-nim {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--dr-slate);
+}
+
+/* Stat Bars */
+.party-stat-bar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.party-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.party-stat-label {
+  width: 160px;
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--dr-ice);
+}
+
+.party-stat-meter {
+  flex: 1;
+  height: 8px;
+  background: #090a28;
+  border: 1px solid var(--dr-slate);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.party-stat-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--dr-pink), var(--dr-cyan));
+}
+
+.party-stat-val {
+  width: 40px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--dr-gold);
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   MODALS & OVERLAYS
+   -------------------------------------------------------------------------- */
+.dr-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(3, 3, 18, 0.88);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.dr-modal-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dr-modal-content {
+  background: rgba(8, 9, 46, 0.95);
+  border: 3px solid var(--dr-cyan);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 680px;
+  max-height: 85vh;
+  padding: 20px;
+  box-shadow: 0 0 32px var(--dr-cyan-glow);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+}
+
+.dr-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--dr-slate);
+  padding-bottom: 10px;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--dr-gold);
+}
+
+.dr-modal-close {
+  background: none;
+  border: none;
+  color: var(--dr-pink);
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.dr-modal-body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--dr-ice);
+}
+
+/* Quick Teleport Bar */
+.dr-nav-bar {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+
+.dr-nav-dot {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--dr-slate);
+  border-radius: 6px;
+  background: rgba(9, 10, 42, 0.8);
+  color: var(--dr-slate);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dr-nav-dot.active {
+  border-color: var(--dr-cyan);
+  color: var(--dr-cyan);
+  background: rgba(117, 251, 237, 0.2);
+  box-shadow: 0 0 10px var(--dr-cyan-glow);
+  font-weight: bold;
+}

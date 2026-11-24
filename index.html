@@ -3,67 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FireBat (Firefly × Bat) | Penjadwalan Tugas Cloud</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%23040817'/%3E%3Ccircle cx='24' cy='34' r='14' fill='%2338bdf8' opacity='.4'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23fbbf24'/%3E%3Cpath d='M34 28l7-7 4 7 4-7 7 7-4 13-7 4-7-4z' fill='%23a855f7' opacity='.85'/%3E%3C/svg%3E" />
+  <title>FireBat (Firefly × Bat) | Deltarune Cyber World Presentation</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0b3b'/%3E%3Cpath d='M32 10 L44 26 L38 26 L48 42 L36 42 L36 54 L28 54 L28 42 L16 42 L26 26 L20 26 Z' fill='%2375fbed'/%3E%3Cpath d='M32 18 L36 26 L28 26 Z' fill='%23eb0095'/%3E%3C/svg%3E" />
 
-  <!-- Fonts: Sora (Headings), Manrope (Body), Red Hat Mono -->
+  <!-- Pixel & Monospace Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Red+Hat+Mono:wght@500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
 
-  <!-- Clean Observatory Style -->
-  <link rel="stylesheet" href="./styles/clean.css" />
+  <!-- Deltarune Dark World Stylesheet -->
+  <link rel="stylesheet" href="./styles/deltarune.css" />
 </head>
 <body>
-  <!-- 3D Topological Ambient Background -->
+  <!-- 3D Cyber World Ambient Canvas -->
   <div id="bg-3d"></div>
 
-  <!-- Minimal Foreground Presentation Deck -->
-  <div class="deck-root">
-    <!-- Top Nav -->
-    <header class="deck-top">
-      <div class="brand-pill">
-        <span class="brand-dot"></span>
-        <span>FIREBAT HYBRID · DEMO 1</span>
+  <!-- Deltarune Master UI Root -->
+  <div class="dr-deck-root">
+    <!-- TOP HEADER BAR: HERO PARTY STATUS & QUICK TELEPORT -->
+    <header class="dr-header">
+      <div class="dr-brand">
+        <span class="dr-kris-icon"></span>
+        <span>FIREBAT · CYBER QUEST</span>
       </div>
 
-      <!-- Navigation Dots -->
-      <nav class="nav-dots" id="nav-dots" aria-label="Slide Dots"></nav>
+      <!-- Hero Party Status Bars -->
+      <div class="dr-party-bar">
+        <div class="dr-hero-chip active" title="Kris the Scheduler">
+          <div class="dr-hero-name">KRIS <span>LV4</span></div>
+          <div style="color:var(--dr-cyan);font-size:11px;">SCHEDULER</div>
+          <div class="dr-hero-hp-bar"><div class="dr-hero-hp-fill" style="width:100%;"></div></div>
+        </div>
+        <div class="dr-hero-chip" title="Firefly Metaheuristic: Global Exploration">
+          <div class="dr-hero-name">FIREFLY <span>FA</span></div>
+          <div style="color:var(--dr-cyan);font-size:11px;">EXPLORER</div>
+          <div class="dr-hero-hp-bar"><div class="dr-hero-hp-fill" style="width:85%;"></div></div>
+        </div>
+        <div class="dr-hero-chip" title="Bat Metaheuristic: Local Exploitation">
+          <div class="dr-hero-name">BAT <span>BA</span></div>
+          <div style="color:var(--dr-pink);font-size:11px;">EXPLOITER</div>
+          <div class="dr-hero-hp-bar"><div class="dr-hero-hp-fill" style="width:90%;"></div></div>
+        </div>
+        <div class="dr-hero-chip" title="FireBat Hybrid: Dual Population + SD Rebalancing">
+          <div class="dr-hero-name">FIREBAT <span>HYBRID</span></div>
+          <div style="color:var(--dr-gold);font-size:11px;">OPTIMIZER</div>
+          <div class="dr-hero-hp-bar"><div class="dr-hero-hp-fill" style="width:100%;"></div></div>
+        </div>
+      </div>
 
-      <div class="top-actions">
-        <button class="icon-btn" id="btn-notes" title="Catatan Presenter (N)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>
-        </button>
-        <button class="icon-btn" id="btn-fs" title="Layar Penuh (F)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
-        </button>
+      <!-- Quick Teleport Nav Dots (Chapters 1 to 7) -->
+      <div class="dr-nav-bar" id="nav-dots"></div>
+
+      <!-- Top Action Buttons -->
+      <div class="dr-top-actions">
+        <button class="dr-btn-icon" id="btn-party-top" title="Lihat RPG Stats & Role Kelompok 4 (P)">🛡️ PARTY (P)</button>
+        <button class="dr-btn-icon" id="btn-sfx" title="Toggle Efek Suara 8-Bit (M)">🎵 SFX ON</button>
+        <button class="dr-btn-icon" id="btn-notes" title="Catatan Presenter (N)">📜 NOTES (N)</button>
+        <button class="dr-btn-icon" id="btn-fs" title="Layar Penuh (F)">📺 FULL (F)</button>
       </div>
     </header>
 
-    <!-- Main Slide Stage -->
-    <main class="deck-main" id="deck-main"></main>
+    <!-- MAIN CHAPTER STAGE -->
+    <main class="dr-main-stage" id="chapter-stage"></main>
 
-    <!-- Bottom Nav -->
-    <footer class="deck-bottom">
-      <div class="counter-text" id="deck-counter">01 / 07</div>
+    <!-- BOTTOM CONTAINER: DELTARUNE DIALOGUE BOX & BATTLE ACTION MENU -->
+    <footer class="dr-bottom-bar">
+      <!-- Iconic RPG Dialogue Box with Ralsei Portrait (Clickable to advance/skip) -->
+      <div class="dr-dialogue-box" id="dr-dialogue-box" title="Klik box ini atau tekan [Z] / [Space] untuk lanjut dialog!">
+        <div class="dr-dialogue-portrait" id="dialogue-portrait">
+          <img src="./assets/ralsei/front_idle.png" class="dr-portrait-img" id="dialogue-portrait-img" alt="Ralsei" />
+        </div>
+        <div class="dr-dialogue-content">
+          <div class="dr-dialogue-speaker" id="dialogue-speaker">RALSEI GUIDING PRINCE</div>
+          <div class="dr-dialogue-text" id="dialogue-text">Memuat Cyber Datacenter...</div>
+        </div>
+        <div class="dr-dialogue-prompt" id="dialogue-prompt" style="display:none;">♥ NEXT [Z] ▶</div>
+      </div>
 
-      <div class="arrow-group">
-        <button class="arrow-btn" id="btn-prev" title="Sebelumnya (←)">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 19l-7-7 7-7"/></svg>
-        </button>
-        <button class="arrow-btn" id="btn-next" title="Berikutnya (→ / Spasi)">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
-        </button>
+      <!-- Deltarune Battle Action Menu Buttons -->
+      <div class="dr-action-menu">
+        <button class="dr-act-btn active" data-act="fight" title="Chapter 1: Cover & Party Members">⚔️ FIGHT / COVER</button>
+        <button class="dr-act-btn" data-act="act" title="Chapter 4: Interactive CloudSim Battle Arena">🪄 ACT / SIMULATE</button>
+        <button class="dr-act-btn" data-act="item" title="Chapter 5: Cyber Data Lab & 3D Chart">🎒 ITEM / DATA LAB</button>
+        <button class="dr-act-btn" data-act="spare" title="Chapter 7: Summary & References">💖 SPARE / SUMMARY</button>
       </div>
     </footer>
+  </div>
 
-    <!-- Speaker Notes Modal -->
-    <div class="notes-modal hidden" id="notes-modal">
-      <div class="notes-head">
-        <span>Catatan Bicara Presenter</span>
-        <button id="btn-close-notes" style="background:none;border:none;color:var(--ink-secondary);font-size:22px;cursor:pointer;line-height:1;">&times;</button>
+  <!-- SPEAKER NOTES MODAL (N) -->
+  <div class="dr-modal-overlay hidden" id="notes-modal">
+    <div class="dr-modal-content">
+      <div class="dr-modal-header">
+        <span>📜 CATATAN BICARA PRESENTER (SPEAKER NOTES)</span>
+        <button class="dr-modal-close" id="btn-close-notes">&times;</button>
       </div>
-      <p class="notes-text" id="notes-text"></p>
+      <div class="dr-modal-body" id="notes-text">
+        Tidak ada catatan khusus.
+      </div>
+    </div>
+  </div>
+
+  <!-- RESEARCH CHART IMAGE ZOOM MODAL -->
+  <div class="dr-modal-overlay hidden" id="img-modal">
+    <div class="dr-modal-content" style="max-width:800px;">
+      <div class="dr-modal-header">
+        <span id="img-modal-title">📊 PREVIEW DATA CHART</span>
+        <button class="dr-modal-close" id="btn-close-img-modal">&times;</button>
+      </div>
+      <div class="dr-modal-body" style="text-align:center;">
+        <img id="img-modal-tag" src="" alt="Research Chart" style="max-width:100%;max-height:65vh;border-radius:8px;border:2px solid var(--dr-cyan);" />
+      </div>
+    </div>
+  </div>
+
+  <!-- RPG PARTY STATS CARD MODAL (KELOMPOK 4 INSPECTOR) -->
+  <div class="dr-modal-overlay hidden" id="party-modal">
+    <div class="dr-modal-content party-modal-card" id="party-modal-inner">
+      <div class="dr-modal-header">
+        <span id="party-modal-headline">🛡️ PARTY MEMBER STATS · KELOMPOK 4</span>
+        <button class="dr-modal-close" id="btn-close-party-modal">&times;</button>
+      </div>
+      <div class="dr-modal-body" id="party-modal-body">
+        <!-- Rendered dynamically by deltaruneChapters.js -->
+      </div>
     </div>
   </div>
 
@@ -71,12 +133,19 @@
   <script src="./lib/three.min.js"></script>
   <script src="./lib/OrbitControls.js"></script>
 
-  <!-- Application Logic -->
+  <!-- Sound Synth & 3D Visualizer Engines -->
+  <script src="./js/sfxSynth.js"></script>
   <script src="./js/ambient3d.js"></script>
   <script src="./js/story3d.js"></script>
   <script src="./js/interactiveSim3d.js"></script>
   <script src="./js/resultChart3d.js"></script>
-  <script src="./js/cleanSlides.js"></script>
-  <script src="./js/cleanApp.js"></script>
+  <script src="./js/simEngine.js"></script>
+
+  <!-- Ralsei Sprite Companion Engine -->
+  <script src="./js/ralseiCompanion.js"></script>
+
+  <!-- Deltarune Game Engine & Chapters -->
+  <script src="./js/deltaruneChapters.js"></script>
+  <script src="./js/deltaruneApp.js"></script>
 </body>
 </html>
